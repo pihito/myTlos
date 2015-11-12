@@ -1,0 +1,33 @@
+{% extends "base.html" %} {% block content %}
+<section id="content">
+    <div class="container">
+        <div class="card">
+            <div class="card-header">
+                <h2>Ajouter votre travail</h2>
+            </div>
+            <div class="card-body card-padding">
+                <form role="form">
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <div class="fg-line">
+                                    <input type="text" class="form-control" placeholder="Nom du projet">
+                                </div>
+                                <div class="fg-line">
+                                    <input type="text" class="form-control" placeholder="Description">
+                                </div>
+                                <div class="fg-line">
+                                    <input type="text" class="form-control" placeholder="BeeCoin estimation">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <button type="submit" class="btn btn-primary btn-sm m-t-10 waves-effect">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

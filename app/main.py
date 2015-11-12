@@ -17,9 +17,15 @@ def landingPage():
 def addwork():
     return render_template('addWork.html')
 
-@app.route("/all_klos")
+@app.route("/add_project")
 def allwork():
+    return render_template('/addProject.html')
+
+@app.route("/all_klos")
+def allProject():
     return render_template('all_klos.html')
+
+
 
 if __name__ == "__main__":
 #lance le serveur Flask via le plug-in flask-script
