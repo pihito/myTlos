@@ -1,0 +1,30 @@
+{% extends "base.html" %} {% block content %}
+<section id="content">
+    <div class="container">
+        <div class="card">
+            <div class="card-header">
+                <h2>Ajouter votre travail</h2>
+            </div>
+            <div class="card-body card-padding">
+               <form method="POST" action="/test_form">
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <div class="fg-line">
+                                    {{ form.csrf_token }}
+                                </div>
+                                <div class="fg-line">
+                                    {{ form.name.label }} {{ form.name(size=20,class='form-control', placeholder='Nom du projet') }}
+                                </div>
+                                <div class="fg-line">
+                                    <input type="submit" value="Go">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

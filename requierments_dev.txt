@@ -3,4 +3,5 @@ Flask-restful
 Flask-script
 mongoengine
 Flask-mongoengine
+flask-debugtoolbar
 Flask-wtf

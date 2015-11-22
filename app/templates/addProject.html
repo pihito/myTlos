@@ -1,33 +1,120 @@
-{% extends "base.html" %} {% block content %}
+{% extends "base.html" %} {% block addHeadJs %}
+<link href="{{url_for('static', filename ='styles/jquery.bootgrid.css')}}" rel="stylesheet">
+<script src="{{url_for('static', filename ='js/vendors/jquery.bootgrid/dist/jquery.bootgrid.js')}}"></script>
+{% endblock %} {% block content %}
 <section id="content">
     <div class="container">
         <div class="card">
             <div class="card-header">
-                <h2>Ajouter votre travail</h2>
+            {% if p %}
+                <h2>modifier votre projet</h2>
+            {% else %}
+                <h2>Ajouter votre projet</h2>
+            {% endif %}
             </div>
             <div class="card-body card-padding">
-                <form role="form">
-                    <div class="row">
-                        <div class="col-sm-4">
-                            <div class="form-group">
-                                <div class="fg-line">
-                                    <input type="text" class="form-control" placeholder="Nom du projet">
-                                </div>
-                                <div class="fg-line">
-                                    <input type="text" class="form-control" placeholder="Description">
-                                </div>
-                                <div class="fg-line">
-                                    <input type="text" class="form-control" placeholder="BeeCoin estimation">
+
+                <div class="panel-group" role="tablist" aria-multiselectable="true">
+                    <div class="panel panel-collapse">
+                        <div class="panel-heading" role="tab" id="headingOne">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                    Informations générales
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseOne" class="collapse in" role="tabpanel" aria-labelledby="headingOne">
+                            <div class="panel-body">
+                                <form role="form">
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <div class="fg-line">
+                                                    {% if p %}
+                                                        {{ form.name(size=20,class='form-control', value=p.name) }}
+                                                    {% else %}
+                                                        {{ form.name(size=20,class='form-control', placeholder="Name") }}
+                                                    {% endif %} 
+                                                </div>
+                                                <div class="fg-line">
+                                                    {% if p %}
+                                                        {{ form.description(size=20,class='form-control', value=p.description) }}
+                                                    {% else %}
+                                                        {{ form.description(size=20,class='form-control', placeholder="Description") }}
+                                                    {% endif %}
+                                                </div>
+                                               
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-8">
+                                            <div class="form-group">
+                                                <div class="fg-line">
+                                                    {% if p %}
+                                                        {{ form.pId(size=20,class='form-control',disabled=true, value=p.id) }}
+                                                    {% else %}
+                                                        {{ form.pId(size=20,class='form-control', placeholder="Id") }}
+                                                    {% endif %} 
+                                                </div>
+                                                 <div class="fg-line">
+                                                    {% if p %}
+                                                        {{ form.tlosEstimate(size=20,class='form-control', value=p.tlosEstimate) }}
+                                                    {% else %}
+                                                        {{ form.tlosEstimate(size=20,class='form-control', placeholder="BeeCoin estimation") }}
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <button type="submit" formmethod="post" class="btn btn-primary btn-sm m-t-10 waves-effect">save</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-collapse">
+                        <div class="panel-heading" role="tab" id="headingTwo">
+                            <h4 class="panel-title">
+                                <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                    Tâche de niveau 1 du projet
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseTwo" class="collapse" role="tabpanel" aria-labelledby="headingTwo">
+                            <div class="panel-body">
+                            <button class="btn bgm-cyan btn-float waves-effect waves-circle waves-float"><i class="zmdi zmdi-plus"></i></button>
+                                <div class="table-responsive">
+                                    <table id="data-table-task" class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th data-column-id="name" data-type="numeric" data-identifier="true">Name</th>
+                                                <th data-column-id="description">Description</th>
+                                                <th data-column-id="TlosEstimate" data-type="numeric" data-order="desc">BeeCoin estimate</th>
+                                                <th data-column-id="nbrTask" data-type="numeric" data-order="desc">Budget</th>
+                                                <th data-column-id="commands" data-formatter="commands" data-sortable="false">Commands</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for t in p.tasks %}
+                                            <tr> 
+                                                <td>{{t.name}}</td>
+                                                <td>{{t.description}}</td>
+                                                <td>{{t.tlosEstimate}}</td>
+                                                <td>{{t.budget}}</td>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <button type="submit" class="btn btn-primary btn-sm m-t-10 waves-effect">Submit</button>
-                    </div>
-                </form>
+                </div>
             </div>
         </div>
     </div>
 </section>
+{% endblock %}
+{% block addEndJs %} 
+<script src="{{url_for('static', filename ='js/addProjectView.js')}}"></script>
 {% endblock %}

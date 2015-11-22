@@ -1,0 +1,31 @@
+{% extends "base.html" %} {% block addHeadJs %}
+<link href="{{url_for('static', filename ='styles/jquery.bootgrid.css')}}" rel="stylesheet">
+<script src="{{url_for('static', filename ='js/vendors/jquery.bootgrid/dist/jquery.bootgrid.js')}}"></script>
+{% endblock %} {% block content %}
+<section id="content">
+    <div class="container">
+        <div class="card">
+            <div class="card-header">
+                <h2>My Projects</small></h2>
+            </div>
+
+            <div class="table-responsive">
+                <table id="data-table-project" class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th data-column-id="name" data-type="numeric" data-identifier="true">Name</th>
+                            <th data-column-id="description">Description</th>
+                            <th data-column-id="TlosEstimate" data-type="numeric" data-order="desc">BeeCoin estimate</th>
+                            <th data-column-id="nbrTask" data-type="numeric" data-order="desc">Task</th>
+                            <th data-column-id="commands" data-formatter="commands" data-sortable="false">Commands</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock%}
+{% block addEndJs %} 
+<script src="{{url_for('static', filename ='js/pojectTableView.js')}}"></script>
+{% endblock %}
