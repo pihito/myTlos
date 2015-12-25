@@ -1,0 +1,64 @@
+{% extends "base.html" %} {% block addHeadJs %}
+<link href="{{url_for('static', filename ='styles/jquery.bootgrid.css')}}" rel="stylesheet">
+<script src="{{url_for('static', filename ='js/vendors/jquery.bootgrid/dist/jquery.bootgrid.js')}}"></script>
+{% endblock %} {% block content %}
+<section id="content">
+    <div class="container">
+        <div class="card">
+            <div class="card-header">
+            {% if p %}
+                <h2>modifier votre tâche</h2>
+            {% else %}
+                <h2>Ajouter votre tâche</h2>
+            {% endif %}
+            </div>
+            <div class="card-body card-padding">
+
+                <div class="panel-group" role="tablist" aria-multiselectable="true">
+                    <div class="panel panel-collapse">
+                        <div class="panel-heading" role="tab" id="headingOne">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                    Informations générales
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseOne" class="collapse in" role="tabpanel" aria-labelledby="headingOne">
+                            <div class="panel-body">
+                                <form role="form">
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <div class="fg-line">
+                                                    <label for="TaskName">Task Name</label>
+                                                    {% if p %}
+                                                        {{ form.name(size=20,class='form-control', value=p.name) }}
+                                                    {% else %}
+                                                        {{ form.name(size=20,class='form-control', placeholder="Name") }}
+                                                    {% endif %} 
+                                                </div>
+                                                <div class="fg-line">
+                                                    <label for="TaskDescription">Project Description</label>
+                                                    {% if p %}
+                                                        {{ form.description(size=20,class='form-control', value=p.description) }}
+                                                    {% else %}
+                                                        {{ form.description(size=20,class='form-control', placeholder="Description") }}
+                                                    {% endif %}
+                                                </div>
+                                               
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+{% block addEndJs %} 
+<script src="{{url_for('static', filename ='js/addProjectTask.js')}}"></script>
+{% endblock %}

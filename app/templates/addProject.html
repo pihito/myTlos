@@ -30,6 +30,7 @@
                                         <div class="col-sm-4">
                                             <div class="form-group">
                                                 <div class="fg-line">
+                                                    <label for="projetName">Project Name</label>
                                                     {% if p %}
                                                         {{ form.name(size=20,class='form-control', value=p.name) }}
                                                     {% else %}
@@ -37,6 +38,7 @@
                                                     {% endif %} 
                                                 </div>
                                                 <div class="fg-line">
+                                                    <label for="projetDescription">Project Description</label>
                                                     {% if p %}
                                                         {{ form.description(size=20,class='form-control', value=p.description) }}
                                                     {% else %}
@@ -49,13 +51,15 @@
                                         <div class="col-sm-8">
                                             <div class="form-group">
                                                 <div class="fg-line">
+                                                    <label for="ProjectID">Project Technical ID</label>
                                                     {% if p %}
                                                         {{ form.pId(size=20,class='form-control',disabled=true, value=p.id) }}
                                                     {% else %}
-                                                        {{ form.pId(size=20,class='form-control', placeholder="Id") }}
+                                                        {{ form.pId(size=20,class='form-control',disabled=true) }}
                                                     {% endif %} 
                                                 </div>
                                                  <div class="fg-line">
+                                                    <label for="ProjectTlosEstimate">Project Beecoin estimate</label>
                                                     {% if p %}
                                                         {{ form.tlosEstimate(size=20,class='form-control', value=p.tlosEstimate) }}
                                                     {% else %}
@@ -87,10 +91,10 @@
                                     <table id="data-table-task" class="table table-striped">
                                         <thead>
                                             <tr>
-                                                <th data-column-id="name" data-type="numeric" data-identifier="true">Name</th>
+                                                <th data-column-id="name" data-identifier="true">Name</th>
                                                 <th data-column-id="description">Description</th>
-                                                <th data-column-id="TlosEstimate" data-type="numeric" data-order="desc">BeeCoin estimate</th>
-                                                <th data-column-id="nbrTask" data-type="numeric" data-order="desc">Budget</th>
+                                                <th data-column-id="TlosEstimate" >BeeCoin estimate</th>
+                                                <th data-column-id="Budget">Budget</th>
                                                 <th data-column-id="commands" data-formatter="commands" data-sortable="false">Commands</th>
                                             </tr>
                                         </thead>

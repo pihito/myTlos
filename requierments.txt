@@ -1,6 +1,6 @@
 Flask
 Flask-restful
 Flask-script
-mongoengine
+mongoengine==2.9.1
 Flask-mongoengine
 Flask-wtf

@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, redirect
 from flask.ext.script import Manager
 from flask.ext.mongoengine import MongoEngine
+from bson import ObjectId
 from flask_restful import Resource, Api
 from datalib import Project
 from flask import jsonify
@@ -58,27 +59,64 @@ def addwork():
 
 @app.route("/add_project", methods=('GET', 'POST'))
 def addProject():
-    name = request.args.get('projectName')
+    projectId = request.args.get('projectId')
     projectResult = None
     pForm = ProjectForm()
 
     if request.method == 'POST':
-        print("----GO----")
-        if pForm.pId is not None:
-            print('----'+pForm.pId.data+'----')
-            projectResult = Project.objects(name=pForm.name.data).first()
-            print(pForm.name.data)
+        print('****'+pForm.pId.data+'******') 
+        if pForm.pId.data is not None and pForm.pId.data != '':
+        #Update case
+            projectResult = Project.objects(id=pForm.pId.data).first()
+            #you need to update the objet and update to escape some cache pbs strange ... 
+            projectResult.name = pForm.name.data
+            projectResult.description = pForm.description.data
+            projectResult.tlosEstimate = pForm.tlosEstimate.data
+            projectResult.update(description=pForm.description.data, tlosEstimate=pForm.tlosEstimate.data)
+
+        #create case
+        else:
+            p = Project(pForm.name.data, 
+                        pForm.description.data,
+                        pForm.tlosEstimate.data)
+            p.save()
+
+    else:
+        if projectId is not None:
+            projectResult = Project.objects(id=ObjectId(projectId)).first()
+            if projectResult.tlosEstimate == None:
+                projectResult.tlosEstimate = 0
+
+    return render_template('/addProject.html', form=pForm, p=projectResult)
+
+'''
+@app.route("/add_task",metods=('GET','POST'))
+def addTask():
+    taskName = request.args.get('taskName')
+    ProjectName = request.args.get('ProjectName')
+    taskResult = None
+    tform = TaskForm()
+
+    if request.method == 'POST':
+        projectResult = Project.objects(name=tform.pName.data).first()
+        if tform.pId is not None:
+            
+            task = next(t for t in projectResult.tasks if t.name == tName)
             #projectResult.name = pForm.name.data
             projectResult.description = pForm.description.data
             #projectResult.tlosEstimate = pForm.tlosEstimate.data
             projectResult.update(description = pForm.description.data)
     else:
-        if name is not None:
-            projectResult = Project.objects(name=name).first()
-            if projectResult.tlosEstimate == None:
+        projectResult = Project.objects(name=ProjectName).first()
+        if taskName is not None:
+            task = next(t for t in projectResult.tasks if t.name == taskName)
+            if task.tlosEstimate == None:
                 projectResult.tlosEstimate = 0
+            if task.budget == None:
+                projectResult.budget = 0
 
-    return render_template('/addProject.html', form=pForm, p=projectResult)
+    return render_template('/addTask.html', form=tform, t=task, pName =projectResult.name , pId=projectResult.id)
+'''
 
 
 @app.route("/all_klos")
@@ -95,7 +133,7 @@ class ApiProject(Resource):
 
     def post(self):
         projectList = Project.objects()
-        data = [{"name": p.name, "description": p.description, "TlosEstimate": p.tlosEstimate, "nbrTask": len(p.tasks)} for p in projectList]
+        data = [{"id":str(p.id),"name": p.name, "description": p.description, "TlosEstimate": str(p.tlosEstimate), "nbrTask": len(p.tasks)} for p in projectList]
         dic = {"current": 1, "rowCount": 10, "rows": data, "total": 1}
         return jsonify(dic)
         # return '{"current": 1,"rowCount": 10,"rows": [{"name": "coucou","description": "123@test.de","Tlos estimate":5}],"total": 1}'
